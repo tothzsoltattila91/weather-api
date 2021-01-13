@@ -1,27 +1,42 @@
-import { Component } from 'react';
+import { ChangeEvent, Component } from 'react';
 import { CurrentWeather, ForeCast } from './components';
 
 interface ComponentState {
-  isForeCast: boolean;
+  city: string;
 }
 
 class WeatherLayout extends Component {
-  public state: ComponentState = {
-    isForeCast: false,
+  state: ComponentState = {
+    city: '',
   };
 
-  private handleViewChange = () => {
-    this.setState({ isForeCast: !this.state.isForeCast });
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleEnterHit);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleEnterHit);
+  }
+
+  handleEnterHit = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      console.log('submit city');
+    }
+  };
+
+  handleCityChange = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setState({ city: event.target.value });
   };
 
   render() {
-    const { isForeCast } = this.state;
+    const { city } = this.state;
 
     return (
       <div>
-        <header>{isForeCast ? 'Weather forecast' : 'Current Weather'}</header>;
-        <button onClick={this.handleViewChange}>{isForeCast ? 'Get current weather' : 'Get weather forecast'}</button>
-        {isForeCast ? <ForeCast /> : <CurrentWeather />}
+        <header>Weather forecast</header>
+        <input value={city} onChange={this.handleCityChange} />
+        <ForeCast />
+        <CurrentWeather />
         <footer>Weather App</footer>
       </div>
     );
