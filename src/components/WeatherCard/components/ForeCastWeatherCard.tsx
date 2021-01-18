@@ -1,16 +1,12 @@
-import { WeatherIcon } from './WeatherIcon';
+import { ForeCastData } from "../interfaces";
+import { WeatherIcon } from "./WeatherIcon";
 
-interface ComponentProps {
-  iconId: string;
-  temperatureMin: number;
-  temperatureMax: number;
-}
-
-function ForeCastWeatherCard(props: ComponentProps) {
-  const { iconId, temperatureMin, temperatureMax } = props;
+function ForeCastWeatherCard(props: ForeCastData) {
+  const { iconId, temperatureMin, temperatureMax, day } = props;
 
   return (
     <div>
+      <div>{day}</div>
       <WeatherIcon iconId={iconId} />
       <div>
         <span>{temperatureMin}°</span>

@@ -1,2 +1,2 @@
 export { ForeCast } from './ForeCast';
-export { CurrentWeather } from './CurrentWeather';
+export { HighlightedWeather } from './HighlightedWeather';
