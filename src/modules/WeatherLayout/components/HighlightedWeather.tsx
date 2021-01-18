@@ -3,11 +3,11 @@ import { ForeCastWeatherCard } from "../../../components/WeatherCard/components/
 import { WeatherData } from "../interfaces";
 
 interface ComponentProps {
-  activeWeater: WeatherData & {isForeCast: boolean};
+  activeWeather: WeatherData & {isForeCast: boolean};
   onWeatherHighlight(index?: number):void;
 }
 
-function HighlightedWeather({ activeWeater, onWeatherHighlight }: ComponentProps) {
+function HighlightedWeather({ activeWeather, onWeatherHighlight }: ComponentProps) {
   const {
     temperatureMin,
     temperatureMax,
@@ -16,7 +16,7 @@ function HighlightedWeather({ activeWeater, onWeatherHighlight }: ComponentProps
     temperature,
     description,
     isForeCast,
-  } = activeWeater;
+  } = activeWeather;
 
   return (
     <div>
@@ -24,7 +24,7 @@ function HighlightedWeather({ activeWeater, onWeatherHighlight }: ComponentProps
       {isForeCast ? (
         <ForeCastWeatherCard
           day={day}
-          iconId={icondId}
+          iconId={iconId}
           temperatureMin={temperatureMin}
           temperatureMax={temperatureMax}
         />
