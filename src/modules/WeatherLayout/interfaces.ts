@@ -1,8 +1,12 @@
-import { ForeCastData } from "../../components/WeatherCard/interfaces";
-
-interface WeatherData extends ForeCastData {
+interface WeatherData {
+  day: string;
+  iconId: string;
+  temperatureMin: number;
+  temperatureMax: number;
   temperature: number;
   description: string;
+  humidity: number;
+  windSpeed: number;
 }
 
 export type { WeatherData };

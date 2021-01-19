@@ -1,0 +1,24 @@
+header {
+  height: 40px;
+  padding: 10px;
+  text-align: right;
+  color: white;
+  font-size: 30px;
+  background-color: #41b3a3;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  color: white;
+  text-align: right;
+  height: 30px;
+  color: white;
+  background-color: #41b3a3;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}

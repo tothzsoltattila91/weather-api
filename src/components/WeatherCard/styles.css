@@ -1,0 +1,7 @@
+.weatherCard {
+  cursor: pointer;
+}
+
+.weatherCard:hover {
+  background-color:rgba(232, 168, 124, 0.3)
+}

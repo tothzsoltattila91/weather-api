@@ -1,19 +1,20 @@
 import { ChangeEvent, Component } from 'react';
-import { ForeCastData } from '../../components/WeatherCard/interfaces';
-import { Env } from '../../utils';
+import { Spinner } from '../../components/Spinner';
+import { HighlightedWeatherCard } from '../../components/WeatherCard';
 import { ForeCast } from './components';
-import { HighlightedWeather } from './components/HighlightedWeather';
 import { WeatherData } from './interfaces';
-
-interface ActiveWeather extends WeatherData {
-  isForeCast: boolean;
-}
+import { fetchCurrentWeather, fetchForeCastWeather } from './rest';
+import { formatCurrentWeatherData, formatForeCastWeatherData } from './utils';
+import './styles.css';
 
 interface ComponentState {
   city: string;
-  activeWeather: ActiveWeather;
+  highlightedWeather: WeatherData & { isForeCast: boolean };
   currentWeather: WeatherData | {};
-  foreCasts: ForeCastData[];
+  foreCasts: WeatherData[];
+  isLoading: boolean;
+  isFetched: boolean;
+  activeWeather: number;
 }
 
 interface CurrentWeatherApiResponse {
@@ -23,17 +24,22 @@ interface CurrentWeatherApiResponse {
 class WeatherLayout extends Component {
   state: ComponentState = {
     city: '',
-    activeWeather: {
-      isForeCast: false,
+    highlightedWeather: {
       description: 'fetching...',
       temperature: 0,
       temperatureMin: 0,
       temperatureMax: 0,
       day: '',
       iconId: '',
+      humidity: 0,
+      windSpeed: 0,
+      isForeCast: false,
     },
     currentWeather: {},
     foreCasts: [],
+    isFetched: false,
+    isLoading: false,
+    activeWeather: 0,
   };
 
   componentDidMount(): void {
@@ -44,31 +50,27 @@ class WeatherLayout extends Component {
     window.removeEventListener('keydown', this.handleEnterHit);
   }
 
-  fetchCurrentWeather(): Promise<Response> {
-    return fetch(`${Env.weatherApiUrl}/weather?q=${this.state.city}&appid=${Env.weatherApiKey}`);
-  }
-
-  fetchForeCastWeather(lon: number, lat: number): Promise<Response> {
-    return fetch(
-      `${Env.weatherApiUrl}/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${Env.weatherApiKey}`
-    );
-  }
-
   async fetchWeather() {
-    const currentWeatherResponse = await this.fetchCurrentWeather();
+    const currentWeatherResponse = await fetchCurrentWeather(this.state.city);
     const currentWeatherData: CurrentWeatherApiResponse = await currentWeatherResponse.json();
     const { lon, lat } = currentWeatherData.coord;
 
-    const foreCastWeatherResponse = await this.fetchForeCastWeather(lon, lat);
-    const foreCastWeather = await foreCastWeatherResponse.json();
+    const foreCastWeatherResponse = await fetchForeCastWeather(lon, lat);
+    const foreCastData = await foreCastWeatherResponse.json();
 
-    console.log('currentWeather: ', currentWeatherData);
-    console.log('foreCastWeather: ', foreCastWeather);
+    const currentWeather = formatCurrentWeatherData(currentWeatherData);
+    this.setState({
+      currentWeather,
+      foreCasts: formatForeCastWeatherData(foreCastData),
+      highlightedWeather: currentWeather,
+      isLoading: false,
+      isFetched: true,
+    });
   }
 
   handleEnterHit = (event: KeyboardEvent): void => {
     if (event.key === 'Enter') {
-      this.fetchWeather();
+      this.setState({ isLoading: true }, () => this.fetchWeather());
     }
   };
 
@@ -76,24 +78,38 @@ class WeatherLayout extends Component {
     this.setState({ city: event.target.value });
   };
 
-  handleWeatherHighlight = (index?: number): void => {
-    const activeWeather = index
+  handleWeatherHighlight = (index: number): void => {
+    const highlightedWeather = index
       ? { ...this.state.foreCasts[index], isForeCast: true }
       : { ...this.state.currentWeather, isForeCast: false };
 
-    this.setState({ activeWeather });
+    this.setState({ highlightedWeather, activeWeather: index });
   };
 
   render() {
-    const { activeWeather, city, foreCasts } = this.state;
+    const { highlightedWeather, city, foreCasts, isFetched, isLoading, activeWeather } = this.state;
 
     return (
       <div>
         <header>Weather forecast</header>
-        <input value={city} onChange={this.handleCityChange} />
-        <HighlightedWeather onWeatherHighlight={this.handleWeatherHighlight} activeWeather={activeWeather} />
-        <ForeCast onWeatherHighlight={this.handleWeatherHighlight} foreCasts={foreCasts} />
-        <footer>Weather App</footer>
+        <div>
+          <input value={city} onChange={this.handleCityChange} />
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              {isFetched && <HighlightedWeatherCard {...highlightedWeather} />}
+              {isFetched && (
+                <ForeCast
+                  activeWeather={activeWeather}
+                  foreCasts={foreCasts}
+                  onWeatherHighlight={this.handleWeatherHighlight}
+                />
+              )}
+            </>
+          )}
+        </div>
+        <footer />
       </div>
     );
   }

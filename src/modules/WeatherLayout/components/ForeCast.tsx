@@ -1,17 +1,18 @@
-import { ForeCastWeatherCard } from "../../../components/WeatherCard/components/ForeCastWeatherCard";
-import { ForeCastData } from "../../../components/WeatherCard/interfaces";
+import { ForeCastWeatherCard } from '../../../components/WeatherCard/ForeCastWeatherCard';
+import { WeatherData } from '../interfaces';
 
 interface ComponentProps {
-  foreCasts: ForeCastData[];
+  foreCasts: WeatherData[];
+  activeWeather: number;
   onWeatherHighlight(index: number): void;
 }
 
-function ForeCast({ foreCasts, onWeatherHighlight }: ComponentProps) {
+function ForeCast({ foreCasts, onWeatherHighlight, activeWeather }: ComponentProps) {
   return (
-    <div>
-      {foreCasts.map((foreCast: ForeCastData, index: number) => (
+    <div style={{ display: 'flex' }}>
+      {foreCasts.map((foreCast: WeatherData, index: number) => (
         <div key={index} onClick={() => onWeatherHighlight(index)}>
-          <ForeCastWeatherCard {...foreCast} />
+          <ForeCastWeatherCard {...foreCast} isActive={index === activeWeather} />
         </div>
       ))}
     </div>
