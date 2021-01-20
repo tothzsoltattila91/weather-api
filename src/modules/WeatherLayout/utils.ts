@@ -10,7 +10,7 @@ function formatCurrentWeatherData(currentWeatherData: any) {
     temperatureMax: Math.round(main.temp_max),
     day: DAYS[date.getDay()],
     iconId: weather[0].icon,
-    description: weather[0].description,
+    description: weather[0].main,
     humidity: main.humidity,
     windSpeed: wind.speed,
   };
@@ -34,7 +34,7 @@ function formatForeCastWeatherData(foreCastWeatherData: any) {
       temperatureMax: Math.round(max),
       day: DAYS[(date.getDay() + index) % 7],
       iconId: weather[0].icon,
-      description: weather[0].description,
+      description: weather[0].main,
       humidity,
       windSpeed: wind_speed
     });

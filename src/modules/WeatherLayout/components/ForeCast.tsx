@@ -9,7 +9,7 @@ interface ComponentProps {
 
 function ForeCast({ foreCasts, onWeatherHighlight, activeWeather }: ComponentProps) {
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="forecasts">
       {foreCasts.map((foreCast: WeatherData, index: number) => (
         <div key={index} onClick={() => onWeatherHighlight(index)}>
           <ForeCastWeatherCard {...foreCast} isActive={index === activeWeather} />

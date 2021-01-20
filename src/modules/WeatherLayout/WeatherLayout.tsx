@@ -1,7 +1,7 @@
 import { ChangeEvent, Component } from 'react';
 import { Spinner } from '../../components/Spinner';
 import { HighlightedWeatherCard } from '../../components/WeatherCard';
-import { ForeCast } from './components';
+import { CityField, ForeCast } from './components';
 import { WeatherData } from './interfaces';
 import { fetchCurrentWeather, fetchForeCastWeather } from './rest';
 import { formatCurrentWeatherData, formatForeCastWeatherData } from './utils';
@@ -68,9 +68,13 @@ class WeatherLayout extends Component {
     });
   }
 
+  handleSearch = () => {
+    this.setState({ isLoading: true }, () => this.fetchWeather());
+  };
+
   handleEnterHit = (event: KeyboardEvent): void => {
     if (event.key === 'Enter') {
-      this.setState({ isLoading: true }, () => this.fetchWeather());
+      this.handleSearch();
     }
   };
 
@@ -92,8 +96,8 @@ class WeatherLayout extends Component {
     return (
       <div>
         <header>Weather forecast</header>
-        <div>
-          <input value={city} onChange={this.handleCityChange} />
+        <div className="weatherLayout">
+          <CityField value={city} onFieldChange={this.handleCityChange} onSearch={this.handleSearch} />
           {isLoading ? (
             <Spinner />
           ) : (
@@ -109,7 +113,6 @@ class WeatherLayout extends Component {
             </>
           )}
         </div>
-        <footer />
       </div>
     );
   }

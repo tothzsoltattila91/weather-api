@@ -11,18 +11,16 @@ function ForeCastWeatherCard(props: ComponentProps) {
 
   return (
     <div
-      className="weatherCard"
+      className="FCCard"
       style={{
-        flexDirection: 'row',
-        borderRadius: '10px',
-        border: isActive ? '2px solid #E27D60' : 'none',
+        border: isActive ? '2px solid #EC9C4C' : '2px solid #fff',
       }}
     >
-      <div>{day}</div>
-      <img alt="weather_image" src={`${Env.weatherIconsUrl}/${iconId}@2x.png`} />
-      <div>
-        <span>{temperatureMin}°</span>
-        <span>{temperatureMax}°</span>
+      <div>{day.slice(0, 3)}</div>
+      <img className="FCIcon" alt="weather_image" src={`${Env.weatherIconsUrl}/${iconId}@2x.png`} />
+      <div className="FCTemps">
+        <div>{temperatureMin}°C</div>
+        <div>{temperatureMax}°C</div>
       </div>
     </div>
   );

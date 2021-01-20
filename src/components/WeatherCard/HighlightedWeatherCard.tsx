@@ -7,21 +7,38 @@ interface ComponentProps extends WeatherData {
 }
 
 function HighlightedWeatherCard(props: ComponentProps) {
-  const { description, iconId, temperature, temperatureMin, temperatureMax, humidity, windSpeed, isForeCast } = props;
+  const {
+    description,
+    iconId,
+    temperature,
+    temperatureMin,
+    temperatureMax,
+    humidity,
+    windSpeed,
+    isForeCast,
+    day,
+  } = props;
 
   return (
-    <div className="weatherCard">
-      <img alt="weather_image" src={`${Env.weatherIconsUrl}/${iconId}@2x.png`} />
-      <div>{description}</div>
-      <div>{temperature}°</div>
-      {isForeCast && (
-        <>
-          <div>{temperatureMax}</div>
-          <div>{temperatureMin}</div>
-        </>
-      )}
-      <div>humidity: {humidity}%</div>
-      <div>windspeed: {windSpeed}km/h</div>
+    <div className="HLCard">
+      <div className="HLIconBlock">
+        <div className="HLDescription">
+          <div>{day}</div>
+          <div>{description}</div>
+        </div>
+        <img className="HLIcon" alt="weather_image" src={`${Env.weatherIconsUrl}/${iconId}@2x.png`} />
+        <div>{temperature}°C</div>
+      </div>
+      <div className="HLMiscColumn">
+        <div>Humidity: {humidity}%</div>
+        <div>Windspeed: {windSpeed}km/h</div>
+        {isForeCast && (
+          <>
+            <div>Min. temperature: {temperatureMax}°C</div>
+            <div>Max. temperature: {temperatureMin}°C</div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

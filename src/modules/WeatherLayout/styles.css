@@ -2,23 +2,44 @@ header {
   height: 40px;
   padding: 10px;
   text-align: right;
-  color: white;
+  color: #e6eceb;
   font-size: 30px;
-  background-color: #41b3a3;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
+  background-color: #ec6e4c;
+  text-shadow: 2px 2px rgba(72, 72, 74, 0.3);
 }
 
-footer {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-  color: white;
-  text-align: right;
-  height: 30px;
-  color: white;
-  background-color: #41b3a3;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
+.weatherLayout {
+  padding-top: 20px;
+}
+
+.forecasts {
+  display: flex;
+  flex-wrap: wrap;
+  color: #48484a;
+  padding: 10px;
+}
+
+.citySearch {
+  color: #48484a;
+  padding: 10px;
+}
+
+.cityField {
+  height: 20px;
+  width: 300px;
+  color: #48484a;
+  border-radius: 5px;
+  padding-left: 5px;
+  margin-right: 5px;
+  box-shadow: 3px 2px 2px rgba(72, 72, 74, 0.3);
+}
+
+.searchButton {
+  color: #e6eceb;
+  background-color: #ec6e4c;
+  border: none;
+  height: 25px;
+  width: 100px;
+  border-radius: 5px;
+  box-shadow: 3px 2px 2px rgba(72, 72, 74, 0.3);
 }

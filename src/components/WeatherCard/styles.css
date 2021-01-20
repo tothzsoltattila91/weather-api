@@ -1,7 +1,52 @@
-.weatherCard {
+.FCCard {
   cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
+  text-shadow: 1px 1px rgba(72, 72, 74, 0.3);
 }
 
-.weatherCard:hover {
-  background-color:rgba(232, 168, 124, 0.3)
+.FCCard:hover {
+  background-color: rgba(236, 156, 76, 0.3);
+}
+
+.HLIconBlock {
+  display: flex;
+  font-size: 25px;
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.HLCard {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+  color: #48484a;
+  text-shadow: 1px 1px rgba(72, 72, 74, 0.3);
+}
+
+.HLMiscColumn {
+  font-size: 15px;
+  padding: 15px;
+  flex-grow: 2;
+  font-weight: 300;
+}
+
+.HLDescription {
+  padding: 15px;
+  font-size: 15px;
+}
+
+.FCTemps {
+  display: flex;
+  justify-content: space-between;
+}
+
+.FCIcon {
+  width: 80px;
+}
+
+.HLIcon {
+  width: 120px;
 }
