@@ -7,6 +7,7 @@ interface WeatherData {
   description: string;
   humidity: number;
   windSpeed: number;
+  id: number;
 }
 
 export type { WeatherData };

@@ -1,2 +1,2 @@
-export { ForeCast } from './ForeCast';
-export { CityField } from './CityField';
+export { ForeCastWeatherCard } from './ForeCastWeatherCard';
+export { SelectedWeatherCard } from './SelectedWeatherCard';

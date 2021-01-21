@@ -1,20 +1,27 @@
-import { WeatherData } from '../../modules/WeatherLayout/interfaces';
-import { Env } from '../../utils';
+import { WeatherData } from '../interfaces';
+import { Env } from '../../../utils';
 import './styles.css';
 
-interface ComponentProps extends WeatherData {
+interface ComponentProps {
+  foreCast: WeatherData;
   isActive: boolean;
+  onClick(): void;
 }
 
 function ForeCastWeatherCard(props: ComponentProps) {
-  const { iconId, temperatureMin, temperatureMax, day, isActive } = props;
+  const {
+    foreCast: { iconId, temperatureMin, temperatureMax, day },
+    isActive,
+    onClick,
+  } = props;
 
   return (
     <div
       className="FCCard"
       style={{
-        border: isActive ? '2px solid #EC9C4C' : '2px solid #fff',
+        border: isActive ? '2px solid #EC9C4C' : '2px solid rgba(72, 72, 74, 0.6)',
       }}
+      onClick={onClick}
     >
       <div>{day.slice(0, 3)}</div>
       <img className="FCIcon" alt="weather_image" src={`${Env.weatherIconsUrl}/${iconId}@2x.png`} />
