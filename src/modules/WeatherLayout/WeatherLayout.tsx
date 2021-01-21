@@ -53,10 +53,9 @@ class WeatherLayout extends Component {
   }
 
   async fetchWeather() {
-    const currentWeatherResponse = await fetchCurrentWeather(this.state.city);
-    if (currentWeatherResponse.status === 404) {
-      this.setState({ isLoading: false, isFetched: false, cityIsNotExisting: true });
-    } else {
+    try {
+      const currentWeatherResponse = await fetchCurrentWeather(this.state.city);
+
       const currentWeatherData: CurrentWeatherApiResponse = await currentWeatherResponse.json();
       const { lon, lat } = currentWeatherData.coord;
 
@@ -72,6 +71,9 @@ class WeatherLayout extends Component {
         isFetched: true,
         cityIsNotExisting: false,
       });
+    } catch (error) {
+      console.warn(error);
+      this.setState({ isLoading: false, isFetched: false, cityIsNotExisting: true });
     }
   }
 
