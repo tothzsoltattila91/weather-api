@@ -15,6 +15,7 @@ interface ComponentState {
   isLoading: boolean;
   isFetched: boolean;
   activeWeather: number;
+  cityIsNotExisting: boolean;
 }
 
 interface CurrentWeatherApiResponse {
@@ -40,6 +41,7 @@ class WeatherLayout extends Component {
     isFetched: false,
     isLoading: false,
     activeWeather: 0,
+    cityIsNotExisting: false,
   };
 
   componentDidMount(): void {
@@ -52,24 +54,31 @@ class WeatherLayout extends Component {
 
   async fetchWeather() {
     const currentWeatherResponse = await fetchCurrentWeather(this.state.city);
-    const currentWeatherData: CurrentWeatherApiResponse = await currentWeatherResponse.json();
-    const { lon, lat } = currentWeatherData.coord;
+    if (currentWeatherResponse.status === 404) {
+      this.setState({ isLoading: false, isFetched: false, cityIsNotExisting: true });
+    } else {
+      const currentWeatherData: CurrentWeatherApiResponse = await currentWeatherResponse.json();
+      const { lon, lat } = currentWeatherData.coord;
 
-    const foreCastWeatherResponse = await fetchForeCastWeather(lon, lat);
-    const foreCastData = await foreCastWeatherResponse.json();
+      const foreCastWeatherResponse = await fetchForeCastWeather(lon, lat);
+      const foreCastData = await foreCastWeatherResponse.json();
 
-    const currentWeather = formatCurrentWeatherData(currentWeatherData);
-    this.setState({
-      currentWeather,
-      foreCasts: formatForeCastWeatherData(foreCastData),
-      highlightedWeather: currentWeather,
-      isLoading: false,
-      isFetched: true,
-    });
+      const currentWeather = formatCurrentWeatherData(currentWeatherData);
+      this.setState({
+        currentWeather,
+        foreCasts: formatForeCastWeatherData(foreCastData),
+        highlightedWeather: currentWeather,
+        isLoading: false,
+        isFetched: true,
+        cityIsNotExisting: false,
+      });
+    }
   }
 
   handleSearch = () => {
-    this.setState({ isLoading: true }, () => this.fetchWeather());
+    if (this.state.city.length > 0) {
+      this.setState({ isLoading: true }, () => this.fetchWeather());
+    }
   };
 
   handleEnterHit = (event: KeyboardEvent): void => {
@@ -91,7 +100,7 @@ class WeatherLayout extends Component {
   };
 
   render() {
-    const { highlightedWeather, city, foreCasts, isFetched, isLoading, activeWeather } = this.state;
+    const { highlightedWeather, city, foreCasts, isFetched, isLoading, activeWeather, cityIsNotExisting } = this.state;
 
     return (
       <div>
@@ -102,6 +111,7 @@ class WeatherLayout extends Component {
             <Spinner />
           ) : (
             <>
+              {cityIsNotExisting && <div className="cityNotFound">City is not found, try another one.</div>}
               {isFetched && <HighlightedWeatherCard {...highlightedWeather} />}
               {isFetched && (
                 <ForeCast

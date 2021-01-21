@@ -43,3 +43,9 @@ header {
   border-radius: 5px;
   box-shadow: 3px 2px 2px rgba(72, 72, 74, 0.3);
 }
+
+.cityNotFound {
+  color: #ec6e4c;
+  padding: 10px;
+  font-size: 25px;
+}
