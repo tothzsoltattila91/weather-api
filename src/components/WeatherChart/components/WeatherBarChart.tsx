@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine } from 'recharts';
-import { WeatherData } from '../../../modules/WeatherLayout/interfaces';
+import { WeatherData } from '../../../modules/ForeCast/interfaces';
 
 interface BarProperties {
   name: string;
@@ -15,8 +15,8 @@ interface ComponentProps {
 function WeatherBarChart({ chartData, bars }: ComponentProps) {
   return (
     <BarChart
-      width={500}
-      height={300}
+      width={600}
+      height={400}
       data={chartData}
       margin={{
         top: 5,

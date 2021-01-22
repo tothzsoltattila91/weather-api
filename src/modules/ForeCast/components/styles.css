@@ -1,0 +1,67 @@
+.FCCard {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 5px;
+  text-shadow: 1px 1px rgba(72, 72, 74, 0.3);
+  box-shadow: 2px 1px 1px rgba(72, 72, 74, 0.3);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.FCCard:hover {
+  background-color: rgba(80, 159, 251, 0.3);
+}
+
+.SIconBlock {
+  display: flex;
+  font-size: 35px;
+  padding: 15px;
+}
+
+.SCard {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  color: #48484a;
+  text-shadow: 1px 1px rgba(72, 72, 74, 0.3);
+  justify-content: center;
+  box-shadow: 4px 3px 3px rgba(72, 72, 74, 0.3);
+  border: 2px solid rgba(72, 72, 74, 0.6);
+  border-radius: 8px;
+  max-width: 700px;
+  margin-right: auto;
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.SMiscColumn {
+  font-size: 15px;
+  padding: 15px;
+  font-weight: 300;
+}
+
+.SDescription {
+  padding: 15px;
+  font-size: 15px;
+  width: 100px;
+}
+
+.FCTemps {
+  display: flex;
+  justify-content: space-between;
+}
+
+.FCIcon {
+  width: 80px;
+}
+
+.SIcon {
+  width: 120px;
+}
+
+@media only screen and (max-width: 792) {
+  .FCCard {
+    padding: 5px;
+    margin: 5px;
+  }
+}

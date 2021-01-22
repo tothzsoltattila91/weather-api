@@ -1,8 +1,8 @@
-import { WeatherLayout } from './modules/WeatherLayout';
+import { ForeCast } from './modules/ForeCast';
 
 function App() {
   return (
-    <WeatherLayout />
+    <ForeCast />
   );
 }
 

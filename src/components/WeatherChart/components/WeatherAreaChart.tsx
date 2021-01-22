@@ -1,5 +1,5 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-import { WeatherData } from '../../../modules/WeatherLayout/interfaces';
+import { WeatherData } from '../../../modules/ForeCast/interfaces';
 
 interface ComponentProps {
   chartData: Array<WeatherData>;
@@ -9,7 +9,7 @@ interface ComponentProps {
 function WeatherAreaChart({ chartData, areas }: ComponentProps) {
   return (
     <AreaChart
-      width={500}
+      width={600}
       height={400}
       data={chartData}
       margin={{
@@ -24,7 +24,7 @@ function WeatherAreaChart({ chartData, areas }: ComponentProps) {
       <YAxis />
       <Tooltip />
       {areas.map((area: { dataKey: string; color: string }) => (
-        <Area type="monotone" dataKey={area.dataKey} stroke={area.color} fill={area.color} />
+        <Area key={area.dataKey} type="monotone" dataKey={area.dataKey} stroke={area.color} fill={area.color} />
       ))}
     </AreaChart>
   );
