@@ -1,5 +1,6 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
 import { Spinner } from '../../components/Spinner';
+import { WeatherChart } from '../../components/WeatherChart';
 import { SelectedWeatherCard } from './components';
 import { ForeCastWeatherCard } from './components';
 import { WeatherData } from './interfaces';
@@ -68,8 +69,36 @@ class WeatherLayout extends Component {
     );
   };
 
+  renderWeatherData = () => {
+    const { foreCasts, selectedWeather } = this.state;
+
+    return (
+      <>
+        {selectedWeather && (
+          <>
+            <SelectedWeatherCard selectedWeather={selectedWeather} />
+            {foreCasts.length > 0 && (
+              <>
+                <div className="foreCasts">
+                  {foreCasts.map((foreCast: WeatherData) => (
+                    <ForeCastWeatherCard
+                      foreCast={foreCast}
+                      isActive={foreCast.id === selectedWeather.id}
+                      onClick={() => this.setSelectedWeather(foreCast)}
+                    />
+                  ))}
+                </div>
+                <WeatherChart chartData={foreCasts} />
+              </>
+            )}
+          </>
+        )}
+      </>
+    );
+  };
+
   render() {
-    const { foreCasts, isLoading, selectedWeather } = this.state;
+    const { foreCasts, isLoading } = this.state;
 
     return (
       <div>
@@ -81,25 +110,14 @@ class WeatherLayout extends Component {
           ) : (
             <>
               {foreCasts.length === 0 && <div className="cityNotFound">To display data search for a city.</div>}
-              {selectedWeather && (
-                <>
-                  <SelectedWeatherCard selectedWeather={selectedWeather} />
-
-                  {foreCasts.length > 0 && (
-                    <div className="foreCasts">
-                      {foreCasts.map((foreCast: WeatherData) => (
-                        <ForeCastWeatherCard
-                          foreCast={foreCast}
-                          isActive={foreCast.id === selectedWeather.id}
-                          onClick={() => this.setSelectedWeather(foreCast)}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
+              {this.renderWeatherData()}
             </>
           )}
+        </div>
+        <div className="footer">
+            <a href="https://github.com/tothzsoltattila91/weather-client" rel="noreferrer" target="_blank">
+              Check it on github!
+            </a>
         </div>
       </div>
     );

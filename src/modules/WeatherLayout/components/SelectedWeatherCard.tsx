@@ -29,19 +29,21 @@ function SelectedWeatherCard({ selectedWeather }: ComponentProps) {
         <div>{temperature}°C</div>
       </div>
       <table className="SMiscColumn">
-        <tr>
-          <td>Humidity</td> <td>{humidity}%</td>
-        </tr>
-        <tr>
-          <td>Windspeed</td> <td>{windSpeed}km/h</td>
-        </tr>
-        <tr>
-          <td>Min. temperature </td>
-          <td>{temperatureMin}°C</td>
-        </tr>
-        <tr>
-          <td>Max. temperature</td> <td>{temperatureMax}°C</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>Humidity</td> <td>{humidity}%</td>
+          </tr>
+          <tr>
+            <td>Windspeed</td> <td>{windSpeed}km/h</td>
+          </tr>
+          <tr>
+            <td>Min. temperature </td>
+            <td>{temperatureMin}°C</td>
+          </tr>
+          <tr>
+            <td>Max. temperature</td> <td>{temperatureMax}°C</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   );
