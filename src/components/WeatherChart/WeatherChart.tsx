@@ -13,6 +13,7 @@ interface ComponentProps {
 
 interface ComponentState {
   graphType: GraphType;
+  width: number;
 }
 
 const TEMPERATURE_BARS = [
@@ -25,10 +26,41 @@ const HUMIDITY_AREAS = [{ dataKey: 'humidity', color: '#509ffb' }];
 class WeatherChart extends Component<ComponentProps> {
   state: ComponentState = {
     graphType: GraphType.TEMPERATURE,
+    width: 500,
+  };
+
+  componentDidMount() {
+    window.addEventListener('resize', () => this.debounce(this.handleResize()));
+    this.setState({ width: window.innerWidth });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.debounce(this.handleResize()));
+  }
+
+  debounce = (fn: void) => {
+    const timer = setTimeout(() => fn, 300);
+    clearTimeout(timer);
+  };
+
+  handleResize = () => {
+    this.setState({ width: window.innerWidth });
   };
 
   setGraphType = (graphType: GraphType) => {
     this.setState({ graphType });
+  };
+
+  getChartSize = (): { width: number; height: number } => {
+    const { width } = this.state;
+
+    if (width > 1000) {
+      return { width: width * 0.4, height: width * 0.3 };
+    } else if (width > 700) {
+      return { width: width * 0.5, height: width * 0.4 };
+    } else {
+      return { width: width * 0.7, height: width * 0.5 };
+    }
   };
 
   render() {
@@ -53,9 +85,9 @@ class WeatherChart extends Component<ComponentProps> {
         </button>
 
         {graphType === GraphType.TEMPERATURE ? (
-          <WeatherBarChart chartData={chartData} bars={TEMPERATURE_BARS} />
+          <WeatherBarChart chartData={chartData} bars={TEMPERATURE_BARS} size={this.getChartSize()} />
         ) : (
-          <WeatherAreaChart chartData={chartData} areas={HUMIDITY_AREAS} />
+          <WeatherAreaChart chartData={chartData} areas={HUMIDITY_AREAS} size={this.getChartSize()} />
         )}
       </div>
     );

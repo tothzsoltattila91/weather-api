@@ -4,13 +4,14 @@ import { WeatherData } from '../../../modules/ForeCast/interfaces';
 interface ComponentProps {
   chartData: Array<WeatherData>;
   areas: Array<{ dataKey: string; color: string }>;
+  size: { width: number; height: number };
 }
 
-function WeatherAreaChart({ chartData, areas }: ComponentProps) {
+function WeatherAreaChart({ chartData, areas, size: { width, height } }: ComponentProps) {
   return (
     <AreaChart
-      width={600}
-      height={400}
+      width={width}
+      height={height}
       data={chartData}
       margin={{
         top: 10,

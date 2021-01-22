@@ -10,13 +10,14 @@ interface BarProperties {
 interface ComponentProps {
   chartData: Array<WeatherData>;
   bars: Array<BarProperties>;
+  size: { width: number; height: number };
 }
 
-function WeatherBarChart({ chartData, bars }: ComponentProps) {
+function WeatherBarChart({ chartData, bars, size: { width, height } }: ComponentProps) {
   return (
     <BarChart
-      width={600}
-      height={400}
+      width={width}
+      height={height}
       data={chartData}
       margin={{
         top: 5,
