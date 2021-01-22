@@ -59,9 +59,32 @@
   width: 120px;
 }
 
-@media only screen and (max-width: 792) {
+@media only screen and (max-width: 700px) {
   .FCCard {
     padding: 5px;
     margin: 5px;
+  }
+  .SCard {
+    max-width: 400px;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .SCard {
+    max-width: 300px;
+  }
+
+  .SDescription {
+    padding: 10px;
+    font-size: 12px;
+    width: 50px;
+  }
+  .SMiscColumn {
+    font-size: 12px;
+    padding: 10px;
+  }
+  .SIconBlock {
+    font-size: 25px;
+    padding: 10px;
   }
 }
