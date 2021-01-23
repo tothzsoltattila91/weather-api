@@ -12,12 +12,14 @@ interface ComponentState {
   selectedWeather: WeatherData | null;
   foreCasts: WeatherData[];
   isLoading: boolean;
+  cityOfForeCast: string;
 }
 
 class ForeCast extends Component {
   state: ComponentState = {
     city: '',
     foreCasts: [],
+    cityOfForeCast: '',
     isLoading: false,
     selectedWeather: null,
   };
@@ -35,7 +37,7 @@ class ForeCast extends Component {
 
   submitCity = (event: FormEvent) => {
     event.preventDefault();
-    this.setState({ isLoading: true }, () => this.fetchWeather());
+    this.setState({ isLoading: true, cityOfForeCast: this.state.city }, () => this.fetchWeather());
   };
 
   handleCityChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -70,13 +72,13 @@ class ForeCast extends Component {
   };
 
   renderWeatherData = () => {
-    const { foreCasts, selectedWeather } = this.state;
+    const { foreCasts, selectedWeather, cityOfForeCast } = this.state;
 
     return (
       <>
         {selectedWeather && (
           <>
-            <SelectedWeatherCard selectedWeather={selectedWeather} />
+            <SelectedWeatherCard cityOfForeCast={cityOfForeCast} selectedWeather={selectedWeather} />
             {foreCasts.length > 0 && (
               <>
                 <div className="foreCasts">
@@ -116,9 +118,9 @@ class ForeCast extends Component {
           )}
         </div>
         <div className="footer">
-            <a href="https://github.com/tothzsoltattila91/weather-client" rel="noreferrer" target="_blank">
-              Check it on github!
-            </a>
+          <a href="https://github.com/tothzsoltattila91/weather-client" rel="noreferrer" target="_blank">
+            Check it on github!
+          </a>
         </div>
       </div>
     );

@@ -4,9 +4,10 @@ import './styles.css';
 
 interface ComponentProps {
   selectedWeather: WeatherData;
+  cityOfForeCast: string;
 }
 
-function SelectedWeatherCard({ selectedWeather }: ComponentProps) {
+function SelectedWeatherCard({ selectedWeather, cityOfForeCast }: ComponentProps) {
   const {
     description,
     iconId,
@@ -22,11 +23,15 @@ function SelectedWeatherCard({ selectedWeather }: ComponentProps) {
     <div className="SCard">
       <div className="SIconBlock">
         <div className="SDescription">
+          <div className="SCityText">
+            {cityOfForeCast[0].toUpperCase()}
+            {cityOfForeCast.slice(1, 999)}
+          </div>
           <div>{day}</div>
           <div>{description}</div>
         </div>
         <img className="SIcon" alt="weather_image" src={`${Env.weatherIconsUrl}/${iconId}@2x.png`} />
-        <div>{temperature}°C</div>
+        <div className="STemperature">{temperature}°C</div>
       </div>
       <table className="SMiscColumn">
         <tbody>

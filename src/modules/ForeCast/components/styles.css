@@ -46,6 +46,15 @@
   width: 100px;
 }
 
+.SCityText {
+  font-size: 18px;
+  padding-bottom: 20px;
+}
+
+.STemperature {
+  width: 50px;
+}
+
 .FCTemps {
   display: flex;
   justify-content: space-between;
@@ -64,6 +73,11 @@
     padding: 5px;
     margin: 5px;
   }
+
+  .STemperature {
+    width: 40px;
+  }
+
   .SCard {
     max-width: 400px;
   }
@@ -79,10 +93,21 @@
     font-size: 12px;
     width: 50px;
   }
+
+  .SCityText {
+    font-size: 15px;
+    padding-bottom: 10px;
+  }
+
+  .STemperature {
+    width: 30px;
+  }
+
   .SMiscColumn {
     font-size: 12px;
     padding: 10px;
   }
+
   .SIconBlock {
     font-size: 25px;
     padding: 10px;
