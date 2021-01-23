@@ -1,3 +1,4 @@
+import { RestClient } from '../../utils';
 import { DAYS } from '../../utils/contants';
 import { WeatherData } from './interfaces';
 
@@ -64,37 +65,14 @@ function formatForeCastWeatherData(foreCastWeatherData: ForeCastWeatherApiRespon
   return formattedForeCastWeatherData;
 }
 
-class ApiError extends Error {};
-
-async function myFetch<R>(url: string): Promise<R> {
-  try {
-    const response = await fetch(url);
-
-    if (response.status === 400) {
-      throw new ApiError('You must type in a city.');
-    }
-
-    if(response.status === 404) {
-      throw new ApiError('City is not existing, try another.');
-    }
-    
-    return await response.json();
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-    throw new ApiError('An error occured, try again later.');
-  }
-}
-
 function fetchCurrentWeather(city: string): Promise<CurrentWeatherApiResponse> {
-  return myFetch<CurrentWeatherApiResponse>(
+  return RestClient.get<CurrentWeatherApiResponse>(
     `${process.env.REACT_APP_WEATHER_API_URL}/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
   );
 }
 
 function fetchForeCastWeather(lon: number, lat: number): Promise<ForeCastWeatherApiResponse> {
-  return myFetch<ForeCastWeatherApiResponse>(
+  return RestClient.get<ForeCastWeatherApiResponse>(
     `${process.env.REACT_APP_WEATHER_API_URL}/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
   );
 }
@@ -105,7 +83,7 @@ async function fetchForeCasts(city: string): Promise<Array<WeatherData>> {
 
   const foreCastData = await fetchForeCastWeather(lon, lat);
 
-  // foreCastApi call doesn't contain current weather,  needs to be reassigned with current weather call data in forecast array
+  //foreCastApi call doesn't contain current weather, needs to be reassigned with current weather call data in forecast array
   const foreCast = formatForeCastWeatherData(foreCastData);
   foreCast[0] = {
     ...formatCurrentWeatherData(currentWeatherData),
