@@ -1,11 +1,17 @@
 header {
   height: 40px;
-  padding: 10px;
+  padding: 10px 0px;
   text-align: right;
   color: #e6eceb;
   font-size: 30px;
   background-color: #509ffb;
   text-shadow: 2px 2px rgba(72, 72, 74, 0.3);
+  position: fixed;
+  width: 100%;
+}
+
+.headerText {
+  padding-right: 10px;
 }
 
 body {
@@ -16,7 +22,7 @@ body {
 }
 
 .weatherLayout {
-  padding: 20px 0px 40px 0px;
+  padding: 100px 0px 40px 0px;
   display: flex;
   flex-wrap: wrap;
   text-align: center;

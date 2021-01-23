@@ -9,7 +9,7 @@ interface ComponentProps {
 
 function ForeCastWeatherCard(props: ComponentProps) {
   const {
-    foreCast: { iconId, temperatureMin, temperatureMax, day },
+    foreCast: { iconUrl, temperatureMin, temperatureMax, day },
     isActive,
     onClick,
   } = props;
@@ -23,7 +23,7 @@ function ForeCastWeatherCard(props: ComponentProps) {
       onClick={onClick}
     >
       <div>{day.slice(0, 3)}</div>
-      <img className="FCIcon" alt="weather_image" src={`${process.env.REACT_APP_ICONS_URL}/${iconId}@2x.png`} />
+      <img className="FCIcon" alt="weather_image" src={iconUrl} />
       <div className="FCTemps">
         <div>{temperatureMin}°C</div>
         <div>{temperatureMax}°C</div>

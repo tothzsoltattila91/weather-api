@@ -105,7 +105,9 @@ class ForeCast extends Component {
 
     return (
       <div>
-        <header>Weather forecast</header>
+        <header>
+          <div className="headerText">Weather forecast</div>
+        </header>
         <div className="weatherLayout">
           {this.renderForm()}
           {isLoading ? (

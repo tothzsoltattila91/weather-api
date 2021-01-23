@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { WeatherData } from '../../modules/ForeCast/interfaces';
+import { MediaQueries } from '../../utils';
 import { WeatherAreaChart, WeatherBarChart } from './components';
 
 enum GraphType {
@@ -54,9 +55,9 @@ class WeatherChart extends Component<ComponentProps> {
   getChartSize = (): { width: number; height: number } => {
     const { width } = this.state;
 
-    if (width > 1000) {
+    if (width > MediaQueries.LG) {
       return { width: width * 0.4, height: width * 0.3 };
-    } else if (width > 700) {
+    } else if (width > MediaQueries.MD) {
       return { width: width * 0.5, height: width * 0.4 };
     } else {
       return { width: width * 0.7, height: width * 0.5 };
@@ -85,9 +86,19 @@ class WeatherChart extends Component<ComponentProps> {
         </button>
 
         {graphType === GraphType.TEMPERATURE ? (
-          <WeatherBarChart chartData={chartData} bars={TEMPERATURE_BARS} size={this.getChartSize()} />
+          <WeatherBarChart
+            labelPostfix="°C"
+            chartData={chartData}
+            bars={TEMPERATURE_BARS}
+            size={this.getChartSize()}
+          />
         ) : (
-          <WeatherAreaChart chartData={chartData} areas={HUMIDITY_AREAS} size={this.getChartSize()} />
+          <WeatherAreaChart 
+            labelPostfix="%"
+            chartData={chartData}
+            areas={HUMIDITY_AREAS}
+            size={this.getChartSize()}
+          />
         )}
       </div>
     );

@@ -9,7 +9,7 @@ interface ComponentProps {
 function SelectedWeatherCard({ selectedWeather, cityOfForeCast }: ComponentProps) {
   const {
     description,
-    iconId,
+    iconUrl,
     temperature,
     temperatureMin,
     temperatureMax,
@@ -26,7 +26,7 @@ function SelectedWeatherCard({ selectedWeather, cityOfForeCast }: ComponentProps
           <div>{day}</div>
           <div>{description}</div>
         </div>
-        <img className="SIcon" alt="weather_image" src={`${process.env.REACT_APP_ICONS_URL}/${iconId}@2x.png`} />
+        <img className="SIcon" alt="weather_image" src={iconUrl} />
         <div className="STemperature">{temperature}°C</div>
       </div>
       <table className="SMiscColumn">

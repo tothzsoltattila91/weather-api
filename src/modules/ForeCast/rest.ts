@@ -28,7 +28,7 @@ function formatCurrentWeatherData(currentWeatherData: CurrentWeatherApiResponse)
     temperatureMin: Math.round(main.temp_min),
     temperatureMax: Math.round(main.temp_max),
     day: DAYS[date.getDay()],
-    iconId: weather[0].icon,
+    iconUrl: `${process.env.REACT_APP_ICONS_URL}/${weather[0].icon}@2x.png`,
     description: weather[0].main,
     humidity: main.humidity,
     windSpeed: wind.speed,
@@ -53,7 +53,7 @@ function formatForeCastWeatherData(foreCastWeatherData: ForeCastWeatherApiRespon
       temperatureMin: Math.round(min),
       temperatureMax: Math.round(max),
       day: DAYS[(date.getDay() + index) % 7],
-      iconId: weather[0].icon,
+      iconUrl: `${process.env.REACT_APP_ICONS_URL}/${weather[0].icon}@2x.png`,
       description: weather[0].main,
       humidity,
       windSpeed: wind_speed,
@@ -85,6 +85,7 @@ async function fetchForeCasts(city: string): Promise<Array<WeatherData>> {
   const foreCastWeatherResponse = await fetchForeCastWeather(lon, lat);
   const foreCastData = await foreCastWeatherResponse.json();
 
+  // foreCastApi call doesn't contain current weather,  needs to be reassigned by current weather in forecast array
   const foreCast = formatForeCastWeatherData(foreCastData);
   foreCast[0] = {
     ...formatCurrentWeatherData(currentWeatherData),

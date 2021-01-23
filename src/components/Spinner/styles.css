@@ -7,7 +7,9 @@
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
   display: block;
-  margin: auto;
+  position: absolute;
+  left: calc(50% - 50px);
+  top: calc(50% - 50px);
 }
 
 /* Safari */

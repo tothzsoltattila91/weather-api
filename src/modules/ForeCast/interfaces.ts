@@ -1,6 +1,6 @@
 interface WeatherData {
   day: string;
-  iconId: string;
+  iconUrl: string;
   temperatureMin: number;
   temperatureMax: number;
   temperature: number;

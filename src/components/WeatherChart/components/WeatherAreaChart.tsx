@@ -5,9 +5,10 @@ interface ComponentProps {
   chartData: Array<WeatherData>;
   areas: Array<{ dataKey: string; color: string }>;
   size: { width: number; height: number };
+  labelPostfix: string;
 }
 
-function WeatherAreaChart({ chartData, areas, size: { width, height } }: ComponentProps) {
+function WeatherAreaChart({ chartData, areas, labelPostfix, size: { width, height } }: ComponentProps) {
   return (
     <AreaChart
       width={width}
@@ -22,7 +23,7 @@ function WeatherAreaChart({ chartData, areas, size: { width, height } }: Compone
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="day" />
-      <YAxis />
+      <YAxis tickFormatter={(data) => `${data}${labelPostfix}`}/>
       <Tooltip />
       {areas.map((area: { dataKey: string; color: string }) => (
         <Area key={area.dataKey} type="monotone" dataKey={area.dataKey} stroke={area.color} fill={area.color} />

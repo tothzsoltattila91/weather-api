@@ -11,9 +11,10 @@ interface ComponentProps {
   chartData: Array<WeatherData>;
   bars: Array<BarProperties>;
   size: { width: number; height: number };
+  labelPostfix: string;
 }
 
-function WeatherBarChart({ chartData, bars, size: { width, height } }: ComponentProps) {
+function WeatherBarChart({ chartData, bars, labelPostfix, size: { width, height } }: ComponentProps) {
   return (
     <BarChart
       width={width}
@@ -28,7 +29,7 @@ function WeatherBarChart({ chartData, bars, size: { width, height } }: Component
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="day" />
-      <YAxis />
+      <YAxis tickFormatter={(data) => `${data}${labelPostfix}`}/>
       <Tooltip />
       <Legend />
       <ReferenceLine y={0} stroke="#000" />

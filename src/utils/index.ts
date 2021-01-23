@@ -1,1 +1,1 @@
-export { DAYS } from './contants';
+export { DAYS, MediaQueries } from './contants';
