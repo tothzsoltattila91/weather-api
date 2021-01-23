@@ -49,6 +49,7 @@
 .SCityText {
   font-size: 18px;
   padding-bottom: 20px;
+  text-transform: capitalize;
 }
 
 .STemperature {

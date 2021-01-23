@@ -1,4 +1,3 @@
-import { Env } from '../../utils';
 import { DAYS } from '../../utils/contants';
 import { WeatherData } from './interfaces';
 
@@ -66,12 +65,14 @@ function formatForeCastWeatherData(foreCastWeatherData: ForeCastWeatherApiRespon
 }
 
 function fetchCurrentWeather(city: string): Promise<Response> {
-  return fetch(`${Env.weatherApiUrl}/weather?q=${city}&units=metric&appid=${Env.weatherApiKey}`);
+  return fetch(
+    `${process.env.REACT_APP_WEATHER_API_URL}/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
+  );
 }
 
 function fetchForeCastWeather(lon: number, lat: number): Promise<Response> {
   return fetch(
-    `${Env.weatherApiUrl}/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${Env.weatherApiKey}`
+    `${process.env.REACT_APP_WEATHER_API_URL}/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
   );
 }
 

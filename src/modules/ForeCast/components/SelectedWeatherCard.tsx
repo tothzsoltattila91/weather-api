@@ -1,5 +1,4 @@
 import { WeatherData } from '../interfaces';
-import { Env } from '../../../utils';
 import './styles.css';
 
 interface ComponentProps {
@@ -23,14 +22,11 @@ function SelectedWeatherCard({ selectedWeather, cityOfForeCast }: ComponentProps
     <div className="SCard">
       <div className="SIconBlock">
         <div className="SDescription">
-          <div className="SCityText">
-            {cityOfForeCast[0].toUpperCase()}
-            {cityOfForeCast.slice(1, 999)}
-          </div>
+          <div className="SCityText">{cityOfForeCast}</div>
           <div>{day}</div>
           <div>{description}</div>
         </div>
-        <img className="SIcon" alt="weather_image" src={`${Env.weatherIconsUrl}/${iconId}@2x.png`} />
+        <img className="SIcon" alt="weather_image" src={`${process.env.REACT_APP_ICONS_URL}/${iconId}@2x.png`} />
         <div className="STemperature">{temperature}°C</div>
       </div>
       <table className="SMiscColumn">

@@ -41,7 +41,7 @@ class ForeCast extends Component {
   };
 
   handleCityChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ city: event.target.value });
+    this.setState({ city: event.currentTarget.value });
   };
 
   setSelectedWeather = (foreCast: WeatherData): void => {

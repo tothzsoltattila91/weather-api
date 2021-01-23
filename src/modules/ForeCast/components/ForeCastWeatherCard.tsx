@@ -1,5 +1,4 @@
 import { WeatherData } from '../interfaces';
-import { Env } from '../../../utils';
 import './styles.css';
 
 interface ComponentProps {
@@ -24,7 +23,7 @@ function ForeCastWeatherCard(props: ComponentProps) {
       onClick={onClick}
     >
       <div>{day.slice(0, 3)}</div>
-      <img className="FCIcon" alt="weather_image" src={`${Env.weatherIconsUrl}/${iconId}@2x.png`} />
+      <img className="FCIcon" alt="weather_image" src={`${process.env.REACT_APP_ICONS_URL}/${iconId}@2x.png`} />
       <div className="FCTemps">
         <div>{temperatureMin}°C</div>
         <div>{temperatureMax}°C</div>

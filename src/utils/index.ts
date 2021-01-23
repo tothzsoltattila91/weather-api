@@ -1,1 +1,1 @@
-export { Env } from './Env';
+export { DAYS } from './contants';
