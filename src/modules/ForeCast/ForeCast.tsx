@@ -13,6 +13,7 @@ interface ComponentState {
   foreCasts: WeatherData[];
   isLoading: boolean;
   cityOfForeCast: string;
+  errorMessage: string | null;
 }
 
 class ForeCast extends Component {
@@ -22,16 +23,17 @@ class ForeCast extends Component {
     cityOfForeCast: '',
     isLoading: false,
     selectedWeather: null,
+    errorMessage: null,
   };
 
   async fetchWeather() {
     try {
       const foreCasts = await fetchForeCasts(this.state.city);
 
-      this.setState({ foreCasts, selectedWeather: foreCasts[0], isLoading: false });
+      this.setState({ foreCasts, selectedWeather: foreCasts[0], isLoading: false, errorMessage: null });
     } catch (error) {
       console.warn(error);
-      this.setState({ foreCasts: [], selectedWeather: null, isLoading: false });
+      this.setState({ foreCasts: [], selectedWeather: null, isLoading: false, errorMessage: error.message });
     }
   }
 
@@ -41,7 +43,11 @@ class ForeCast extends Component {
   };
 
   handleCityChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ city: event.currentTarget.value });
+    if(this.state.errorMessage) {
+      this.setState({ city: event.currentTarget.value, errorMessage: null });
+    } else {
+      this.setState({ city: event.currentTarget.value });
+    }
   };
 
   setSelectedWeather = (foreCast: WeatherData): void => {
@@ -101,7 +107,7 @@ class ForeCast extends Component {
   };
 
   render() {
-    const { foreCasts, isLoading } = this.state;
+    const { foreCasts, isLoading, errorMessage } = this.state;
 
     return (
       <div>
@@ -114,7 +120,14 @@ class ForeCast extends Component {
             <Spinner />
           ) : (
             <>
-              {foreCasts.length === 0 && <div className="noCity">To display data search for a city.</div>}
+             {foreCasts.length === 0 && (
+                <div className="noCity" style={{color: errorMessage ? '#ED4337' : '#E6ECEB'}}>
+                  {errorMessage
+                    ? errorMessage
+                    : "To display data search for a city."
+                  }
+                </div>
+              )}
               {this.renderWeatherData()}
             </>
           )}

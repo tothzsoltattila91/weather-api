@@ -64,28 +64,48 @@ function formatForeCastWeatherData(foreCastWeatherData: ForeCastWeatherApiRespon
   return formattedForeCastWeatherData;
 }
 
-function fetchCurrentWeather(city: string): Promise<Response> {
-  return fetch(
+class ApiError extends Error {};
+
+async function myFetch<R>(url: string): Promise<R> {
+  try {
+    const response = await fetch(url);
+
+    if (response.status === 400) {
+      throw new ApiError('You must type in a city.');
+    }
+
+    if(response.status === 404) {
+      throw new ApiError('City is not existing, try another.');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+    throw new ApiError('An error occured, try again later.');
+  }
+}
+
+function fetchCurrentWeather(city: string): Promise<CurrentWeatherApiResponse> {
+  return myFetch<CurrentWeatherApiResponse>(
     `${process.env.REACT_APP_WEATHER_API_URL}/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
   );
 }
 
-function fetchForeCastWeather(lon: number, lat: number): Promise<Response> {
-  return fetch(
+function fetchForeCastWeather(lon: number, lat: number): Promise<ForeCastWeatherApiResponse> {
+  return myFetch<ForeCastWeatherApiResponse>(
     `${process.env.REACT_APP_WEATHER_API_URL}/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
   );
 }
 
 async function fetchForeCasts(city: string): Promise<Array<WeatherData>> {
-  const currentWeatherResponse = await fetchCurrentWeather(city);
-
-  const currentWeatherData: CurrentWeatherApiResponse = await currentWeatherResponse.json();
+  const currentWeatherData = await fetchCurrentWeather(city);
   const { lon, lat } = currentWeatherData.coord;
 
-  const foreCastWeatherResponse = await fetchForeCastWeather(lon, lat);
-  const foreCastData = await foreCastWeatherResponse.json();
+  const foreCastData = await fetchForeCastWeather(lon, lat);
 
-  // foreCastApi call doesn't contain current weather,  needs to be reassigned by current weather in forecast array
+  // foreCastApi call doesn't contain current weather,  needs to be reassigned with current weather call data in forecast array
   const foreCast = formatForeCastWeatherData(foreCastData);
   foreCast[0] = {
     ...formatCurrentWeatherData(currentWeatherData),
